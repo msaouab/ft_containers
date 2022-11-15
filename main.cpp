@@ -6,22 +6,21 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:05:52 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/10 14:05:54 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:55:52 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
-#include <deque>
+# include "./containers.h"
+
 #if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
 	namespace ft = std;
 #else
-	#include <map.hpp>
-	#include <stack.hpp>
-	#include <vector.hpp>
+	#include "./containers/ft_map.hpp"
+	#include "./containers/ft_stack.hpp"
+	#include "./containers/ft_vector.hpp"
 #endif
 
 #include <stdlib.h>

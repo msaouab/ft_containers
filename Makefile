@@ -6,20 +6,20 @@
 #    By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 14:08:45 by msaouab           #+#    #+#              #
-#    Updated: 2022/11/10 14:14:58 by msaouab          ###   ########.fr        #
+#    Updated: 2022/11/14 13:19:37 by msaouab          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = contai
+NAME = Containers
 
 SRC =	main.cpp\
-		map.cpp\
-		stack.cpp\
-		vector.cpp
+		./containers/map.cpp\
+		./containers/stack.cpp\
+		./containers/vector.cpp
 
-INCLUDE =	vector.hpp\
-			map.hpp\
-			stack.hpp\
+INCLUDE =	./containers/vector.hpp\
+			./containers/map.hpp\
+			./containers/stack.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
