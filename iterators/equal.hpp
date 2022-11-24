@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   containers.h                                       :+:      :+:    :+:   */
+/*   equal.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:50:00 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/14 15:55:42 by msaouab          ###   ########.fr       */
+/*   Created: 2022/11/16 17:31:14 by msaouab           #+#    #+#             */
+/*   Updated: 2022/11/19 15:24:44 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CONTAINERS_H_
-# define __CONTAINERS_H_
+#ifndef _EQUAL_HPP__
+# define _EQUAL_HPP__
 
-# include <iostream>
-# include <string>
-# include <deque>
-# include "./containers/ft_map.hpp"
-# include "./containers/ft_stack.hpp"
-# include "./containers/ft_vector.hpp"
+# include "../containers.hpp"
 
-#endif // __CONTAINERS_H_
+namespace ft {
+	template <class InputIterator1, class InputIterator2>
+	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
+	{
+		while (first1 != last1) {
+			if (!(*first1 == *first2))
+				return false;
+			++first1; ++first2;
+		}
+		return true;
+	}
+}
+
+#endif // _EQUAL_HPP__

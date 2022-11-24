@@ -6,11 +6,11 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:05:52 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/14 15:55:52 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/24 11:09:31 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./containers.h"
+# include "./containers.hpp"
 
 #if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
@@ -23,18 +23,11 @@
 	#include "./containers/ft_vector.hpp"
 #endif
 
-#include <stdlib.h>
-
-#define MAX_RAM 4294967296
-#define BUFFER_SIZE 4096
 struct Buffer
 {
 	int idx;
 	char buff[BUFFER_SIZE];
 };
-
-
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
 template<typename T>
 class MutantStack : public ft::stack<T>
