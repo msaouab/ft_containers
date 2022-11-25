@@ -3,23 +3,16 @@
 
 int main ()
 {
-  // constructors used in the same order as described above:
-  std::vector<int> first;                                // empty vector of ints
-//   std::vector<int> second (4,100);                       // four ints with value 100
-//   std::vector<int> third (second.begin(),second.end());  // iterating through second
-//   std::vector<int> fourth (third);                       // a copy of third
+  std::vector<int> myvector;
+//   for (int i=1; i<=5; i++) myvector.push_back(i);
 
-  // the iterator constructor can also be used to construct from arrays:
-//   int myints[] = {16,2,77,29};
-//   std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-
-//   std::cout << "The contents of fifth are:";
-//   for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-    std::cout << first.size() << "\n";
-    std::cout << first.capacity() << "\n";
-    std::cout << first.data() << "\n";
-    std::cout << first.__alloc << "\n";
-//   std::cout << '\n';
+  std::cout << "myvector contains:";
+  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    std::cout << ' ' << *it;
+	// std::vector<int>::iterator it = myvector.begin();
+	// std::vector<int>::iterator il = myvector.end();
+	// std::cout << '\n' << *it << '\n';
+	// std::cout << *it << '\n';
 
   return 0;
 }
