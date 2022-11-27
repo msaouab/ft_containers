@@ -6,15 +6,15 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:00 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/24 11:14:09 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/27 09:38:28 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __CONTAINERS_HPP_
 # define __CONTAINERS_HPP_
 
-# define false 0
-# define true 1
+# define FALSE 0
+# define TRUE 1
 # define MAX_RAM 4294967296
 # define BUFFER_SIZE 4096
 # define COUNT (MAX_RAM / (int)sizeof(Buffer))

@@ -1,18 +1,28 @@
 #include <iostream>
 #include <vector>
-
-int main ()
+ 
+int main()
 {
-  std::vector<int> myvector;
-//   for (int i=1; i<=5; i++) myvector.push_back(i);
-
-  std::cout << "myvector contains:";
-  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
-    std::cout << ' ' << *it;
-	// std::vector<int>::iterator it = myvector.begin();
-	// std::vector<int>::iterator il = myvector.end();
-	// std::cout << '\n' << *it << '\n';
-	// std::cout << *it << '\n';
-
-  return 0;
+    std::vector<int> data = { 1, 2, 4, 5, 5, 6 };
+ 
+    // Set element 1
+    data.at(1) = 88;
+ 
+    // Read element 2
+    std::cout << "Element at index 2 has value " << data.at(2) << '\n';
+ 
+    std::cout << "data size = " << data.size() << '\n';
+ 
+    try {
+        // Set element 6
+        data.at(6) = 666;
+    } catch (std::out_of_range const& exc) {
+        std::cout << exc.what() << '\n';
+    }
+ 
+    // Print final values
+    std::cout << "data:";
+    for (int elem : data)
+        std::cout << " " << elem;
+    std::cout << '\n';
 }

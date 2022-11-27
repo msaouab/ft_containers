@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:57:09 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/25 19:52:07 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/27 13:32:28 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ namespace ft {
 			return (*this);
 		}
 
-/* ********************************** Iterators ********************************** */
+/* ******************************** Iterators ******************************** */
 		iterator begin() {
 			return (_data);
 		}
@@ -120,6 +120,65 @@ namespace ft {
 		void resize (size_type n, value_type val = value_type()) {
 			
 		}
+		size_type capacity() const {
+			return (_cap);
+		}
+		bool empty() const {
+			if (_size > 0)
+				return (TRUE);
+			return (FALSE);
+		}
+		void reserve( size_type new_cap ) {
+			if (_cap > new_cap)
+				return ;
+			_cap = new_cap;
+			return (_size);
+		}
+
+/* ***************************** Element access ****************************** */
+		reference at( size_type pos ) {
+			if (pos < 0 || pos > _size)
+				throw std::out_of_range("Vector at");
+			return (_data[pos]);
+		}
+		const_reference operator[]( size_type pos ) const {
+			if (pos < 0 || pos > _size)
+				throw std::out_of_range("Vector at");
+			return (_data[pos]);
+		}
+		reference operator[]( size_type pos ) {
+			return (_data[pos]);
+		}
+		const_reference operator[]( size_type pos ) const {
+			return (_data[pos]);
+		}
+		reference front() {
+			return (_data[0]);
+		}
+		const_reference front() const {
+			return (_data[0]);
+		}
+		reference back() {
+			return (_data[_size - 1]);
+		}
+		const_reference back() const {
+			return (_data[_size - 1]);
+		}
+
+/* ******************************** Modifiers ******************************** */
+		void clear() {
+			for (int i = 0; i < _size; i++)
+				_data[i].~value_type();
+			_size = 0;
+		}
+		iterator insert( const_iterator pos, const T& value ) {
+			if (pos > _data.begin() && pos < _data.end())
+				_data[pos] = val;
+		}
+		void insert (iterator position, size_type n, const value_type& val);
+		void insert (iterator position, InputIterator first, 
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, 
+				InputIterator>::type last);
 	};
 }
 
