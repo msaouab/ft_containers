@@ -6,14 +6,14 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:09 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/18 20:39:38 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 13:06:17 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _ITERATOR_TRAITS_HPP__
 # define _ITERATOR_TRAITS_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class Category, class T, class Distance = ptrdiff_t,

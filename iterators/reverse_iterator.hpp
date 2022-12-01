@@ -6,24 +6,22 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:05 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/19 15:20:56 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:16:17 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _REVERSE_ITERATOR_HPP__
 # define _REVERSE_ITERATOR_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class Iterator>
 	class reverse_iterator
 	{
-		private:
-			iterator_type p;
 		public:
-			typedef std::size_t														size_type;
 			typedef Iterator														iterator_type;
+			typedef std::size_t														size_type;
 			typedef typename ft::iterator_traits<iterator_type>::difference_type	difference_type;
 			typedef typename ft::iterator_traits<iterator_type>::value_type			value_type;
 			typedef typename ft::iterator_traits<iterator_type>::pointer			pointer;
@@ -94,6 +92,8 @@ namespace ft {
 			pointer operator->() {
 				return &(operator*());
 			}
+		private:
+			iterator_type p;
 	};
 
 	template <class Iterator>

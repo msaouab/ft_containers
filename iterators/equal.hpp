@@ -6,14 +6,14 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:14 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/19 15:24:44 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 13:05:55 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _EQUAL_HPP__
 # define _EQUAL_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class InputIterator1, class InputIterator2>

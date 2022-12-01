@@ -6,14 +6,14 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:08 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/18 12:36:58 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 13:06:28 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _COMPARE_HPP__
 # define _COMPARE_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class InputIterator1, class InputIterator2>

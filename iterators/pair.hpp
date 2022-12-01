@@ -6,14 +6,14 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:06 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/19 12:00:39 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:13:58 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _PAIR_HPP__
 # define _PAIR_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class T1, class T2>
@@ -37,10 +37,10 @@ namespace ft {
 			~pair() {
 				std::cout << "pair called the Destructor" << std::endl;
 			}
-			pair& operator= (const pair& pr) {
-				if (this != &pr) {
-					first_type = pr.first_type;
-					second_type = pr.second_type;
+			pair& operator= (const pair& rhs) {
+				if (this != &rhs) {
+					first = rhs.first;
+					second = rhs.second;
 				}
 				return *this;
 			}

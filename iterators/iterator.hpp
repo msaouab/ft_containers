@@ -6,21 +6,31 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:39:49 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/19 15:20:31 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 15:45:07 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _ITERATOR_HPP__
 # define _ITERATOR_HPP__
 
-# include "../containers.hpp"
+# define TRUE 1
+# define FALSE 0
+
+# include <iostream>
+# include <string>
+# include <memory>
+# include "./enable_if.hpp"
+# include "./equal.hpp"
+# include "./is_integral.hpp"
+# include "./iterator_traits.hpp"
+# include "./lexicographical_compare.hpp"
+# include "./pair.hpp"
+# include "./reverse_iterator.hpp"
 
 namespace ft {
 	template <class T>
 	class iterators : public ft::iterator<std::random_access_iterator_tag,T>
 	{
-		private:
-			pointer p;
 		public:
 			typedef std::size_t											size_type;
 			typedef typename ft::iterator_traits<T>::difference_type	difference_type;
@@ -28,19 +38,22 @@ namespace ft {
 			typedef typename ft::iterator_traits<T>::pointer			pointer;
 			typedef typename ft::iterator_traits<T>::reference			reference;
 			typedef typename ft::iterator_traits<T>::iterator_category	iterator_category;
+		private:
+			pointer p;
 
+		public:
 			iterators() {
-				std::cout << "iterators called the Default Constructor" << std::endl;
+				// std::cout << "iterators called the Default Constructor" << std::endl;
 			}
 			iterators(pointer addr) : p(addr) {
-				std::cout << "iterators called the Default Constructor" << std::endl;
+				// std::cout << "iterators called the Default Constructor" << std::endl;
 			}
 			iterators(const iterators& copy) {
-				std::cout << "Copy iterators the called Constructor" << std::endl;
+				// std::cout << "Copy iterators the called Constructor" << std::endl;
 				*this = copy;
 			}
 			~iterators() {
-				std::cout << "iterators called the Destructor" << std::endl;
+				// std::cout << "iterators called the Destructor" << std::endl;
 			}
 			iterators & operator=(const iterators& rhs) {
 				if (this != &rhs)

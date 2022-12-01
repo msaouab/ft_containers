@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vectortest.cpp                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 11:56:14 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/01 21:02:57 by msaouab          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <iostream>
 #include <vector>
 #include <iterator>
@@ -759,7 +747,7 @@ int main (){
             std::cout << std::endl;
                     
             it = v.begin();
-            it = v.insert( it , 200 );
+            it = v.insert ( it , 200 );
             for (ft::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
                 std::cout << "\t" << *i ;
             std::cout << std::endl;
@@ -1097,6 +1085,4 @@ int main (){
         }
         
     }
-
-    
 }

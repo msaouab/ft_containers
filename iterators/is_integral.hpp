@@ -6,14 +6,14 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:11 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/17 17:33:10 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/11/30 13:06:11 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _IS_INTEGRAL_HPP__
 # define _IS_INTEGRAL_HPP__
 
-# include "../containers.hpp"
+# include "./iterator.hpp"
 
 namespace ft {
 	template <class T>
