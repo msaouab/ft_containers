@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:05 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/30 14:16:17 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:44:59 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ namespace ft {
 			typedef typename ft::iterator_traits<iterator_type>::iterator_category	iterator_category;
 
 			reverse_iterator() {
-				std::cout << "reverse_iterator called the Default Constructor" << std::endl;
+				// std::cout << "reverse_iterator called the Default Constructor" << std::endl;
 			}
 			reverse_iterator (iterator_type it) {
-				std::cout << "reverse_iterator called the Default Constructor" << std::endl;
+				// std::cout << "reverse_iterator called the Default Constructor" << std::endl;
 				p = it;
 			}
 			template <class Iter>
@@ -40,7 +40,7 @@ namespace ft {
 				p = rev_it.base();
 			}
 			~reverse_iterator() {
-				std::cout << "reverse_iterator called the Destructor" << std::endl;
+				// std::cout << "reverse_iterator called the Destructor" << std::endl;
 			}
 			reverse_iterator & operator=(const reverse_iterator &rhs) {
 				if (this != &rhs)

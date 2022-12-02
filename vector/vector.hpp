@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:57:09 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/01 22:13:38 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/02 20:43:38 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,33 @@ namespace ft {
 			_allocate = alloc;
 			_data = _allocate.allocate(_cap);
 			for (size_type i = 0; i < _cap; i++) {
-				_data = val;
+				_data[i] = val;
 			}
 		}
 		template <class InputIterator>
-		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
+		vector (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+			InputIterator>::type last, const allocator_type& alloc = allocator_type()) {
 			_size = last - first;
 			_cap = last - first;
-			_allocate = _allocate.allocate(_cap);
-			int	i = 0;
-			for (InputIterator it = first; it < last; it++)
+			_allocate = alloc;
+			_data = _allocate.allocate(_cap);
+			size_type	i = 0;
+			// for (InputIterator it = first; it < last; it++)
+				// _data[i++] = *it;
+			for (InputIterator it = first ; it != last ; it++)
 				_data[i++] = *it;
 		}
 		vector (const vector& rhs) {
-			if (_cap > 0)
-				_allocate.deallocate(_data, _cap);
-			_allocate = rhs._allocate;
-			_cap = rhs._cap;
-			_size = rhs._size;
-			_allocate.allocate(_data, _cap);
-			for (int i = 0; i < _size; i++)
-				_data[i] = rhs._data[i];
+			_cap = 0;
+			*this = rhs;
+			// if (_cap > 0)
+			// 	_allocate.deallocate(_data, _cap);
+			// _allocate = rhs._allocate;
+			// _cap = rhs._cap;
+			// _size = rhs._size;
+			// _allocate.allocate(_cap);
+			// for (int i = 0; i < _size; i++)
+			// 	_data[i] = rhs._data[i];
 		}
 
 /* ******************************* Destructor ******************************* */
@@ -100,7 +106,7 @@ namespace ft {
 			if (this != &rhs) {
 				_allocate.deallocate(_data, _cap);
 				_allocate = rhs._allocate;
-				_data = _allocate.allocate(rhs._data);
+				_data = _allocate.allocate(rhs._size);
 				_cap = rhs._cap;
 				_size = rhs._size;
 				for (int i = 0; i < _size; i++)
@@ -140,30 +146,41 @@ namespace ft {
 			return (_size);
 		}
 		size_type max_size() const {
-			return (_allocate.size_max());
+			return (_allocate.max_size());
 		}
 		void resize (size_type n, value_type val = value_type()) {
-			
+			if (_size == n)
+				return ;
+			else if (n < _size) {
+				for (size_type i = n ; i < _size ; i++)
+					_data[i].~value_type();
+				_size = n;
+			}
+			else {
+				if (this->_cap * 2 <= n)
+					this->_cap = n;
+				else if (this->_cap < n && this->_cap * 2 > n)
+					this->_cap *= 2;
+				copy(n, val);
+			}
 		}
 		size_type capacity() const {
 			return (_cap);
 		}
 		bool empty() const {
-			if (_size > 0)
-				return (TRUE);
-			return (FALSE);
+			return (_size == 0);
 		}
 		void reserve( size_type new_cap ) {
 			if (_cap > new_cap)
 				return ;
 			_cap = new_cap;
-			return (_size);
+			copy (_size);
 		}
 
 /* ***************************** Element access ****************************** */
 		reference at( size_type pos ) {
-			if (pos < 0 || pos > _size)
-				throw std::out_of_range("Vector at");
+			if (pos < 0 || pos >= _size)
+				throw std::out_of_range("Vector");
 			return (_data[pos]);
 		}
 		const_reference operator[] (size_type n) const {
@@ -189,19 +206,20 @@ namespace ft {
 
 /* ******************************** Modifiers ******************************** */
 		template <class InputIterator>
-		void	assign (InputIterator first, InputIterator last) {
+		void	assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last) {
 			int	i = 0;
-			this->clear();
+			// this->clear();
 			if (_cap < last - first) {
 				_cap = last - first;
 				_allocate.deallocate(_data, _size);
-				_allocate.allocate(_cap);
+				_data = _allocate.allocate(_cap);
 			}
 			for (InputIterator it = first; it < last; it++)
 				_data[i++] = *it;
+			_size = last - first;
 		}
 		void	assign (size_type n, const value_type& val) {
-			this->clear();
+			// this->clear();
 			if (_cap < n) {
 				_cap = n;
 				_allocate.deallocate(_data, _size);
@@ -209,6 +227,7 @@ namespace ft {
 			}
 			for (size_type i = 0; i < n; i++)
 				_data[i] = val;
+			_size = n;
 		}
 		void	push_back( const T& value ) {
 			if (_cap == 0)
@@ -229,54 +248,55 @@ namespace ft {
 		iterator insert (iterator pos, const value_type& value) {
 			size_type	i;
 			if (_cap > _size) {
-				i = _size;
-				_size++;
+				i = _size - 1;
 				for (iterator it = end() - 1; it > pos; it--) {
 					_data[i + 1] = _data[i];
 					i--;
 				}
-				_data[pos] = value;
+				_data[i] = value;
 			}
 			else {
 				value_type	*tmp;
+				i = 0;
 				_cap *= 2;
 				if (_cap == 0)
 					_cap++;
 				tmp = _allocate.allocate(_cap);
-				i = 0;
 				for (iterator it = begin(); it < pos; it++) {
 					tmp[i] = _data[i];
 					i++;
 				}
 				tmp[i] = value;
-				for (iterator it = pos; it < end(); it++) {
+				i = i + 1;
+				for (iterator it = pos + 1; it <= end(); it++) {
 					tmp[i] = _data[i - 1];
 					i++;
 				}
 				_allocate.deallocate(_data, _size);
 				_data = tmp;
 			}
-			return (begin() + pos);
+			_size++;
+			return (begin() + i);
 		}
 		void insert (iterator pos, size_type n, const value_type& val) {
 			size_type	i;
 			if (_cap >= _size + n) {
-				i = _size;
-				_size += n;
+				i = _size - 1;
 				for (iterator it = end() - 1; it > pos; it--) {
 					_data[i + n] = _data[i];
 					i--;
 				}
-				for (iterator it = pos; it < pos + n; it++) {
-					_data[pos + i] = val;
+				for (size_type j = 0; j < n; j++) {
+					_data[i + j] = val;
 					i++;
 				}
 			}
 			else {
 				value_type	*tmp;
-				if (_cap == 0)
-					_cap = n;
-				if (_cap <= _size + n)
+				i = 0;
+				if (_cap * 2 >= _size + n)
+					_cap *= 2;
+				else
 					_cap = _size + n;
 				tmp = _allocate.allocate(_cap);
 				i = 0;
@@ -295,22 +315,26 @@ namespace ft {
 				_allocate.deallocate(_data, _size);
 				_data = tmp;
 			}
+			_size += n;
 		}
 		template <class InputIterator>
-		void insert (iterator pos, InputIterator first, InputIterator last) {
+		void insert (iterator pos, InputIterator first,  typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last) {
 			size_type	i;
 			size_type	n;
 			n = last - first;
-			if (_cap >= _size + n) {
+			if (n < 0)
+				return ;
+			if (_cap > _size + n) {
 				i = _size;
 				_size += n;
 				for (iterator it = end() - 1; it > pos; it--) {
 					_data[i + n] = _data[i];
 					i--;
 				}
-				for (iterator it = first; it < last; it++) {
-					_data[pos + i] = it;
-					i++;
+				InputIterator it = first;
+				for (size_type j; j < i; j++) {
+					_data[j] = *it;
+					// i++;
 				}
 			}
 			else {
@@ -326,7 +350,7 @@ namespace ft {
 					i++;
 				}
 				for (iterator it = first; it < last; it++) {
-					tmp[i] = it;
+					tmp[i] = *it;
 					i++;
 				}
 				for (iterator it = pos; it < end(); it++) {
@@ -336,10 +360,11 @@ namespace ft {
 				_allocate.deallocate(_data, _size);
 				_data = tmp;
 			}
+			_size += last - first;
 		}
 		iterator erase (iterator pos) {
 			for (iterator it = pos; it < end() - 1; it++) {
-				_data[i] = *it;
+				*it = *(it + 1);
 			}
 			_size--;
 			return (pos);
@@ -347,11 +372,16 @@ namespace ft {
 		iterator erase (iterator first, iterator last) {
 			size_type n;
 			n = last - first;
-			if (last < end()) {
-				for (iterator it = first; it < end(); it++)
-					*it = *(it + n);
+			for (iterator it = first; it < last; it++) {
+				if (it + n >= end())
+					break ;
+				*(it) = *(it + n);
 			}
-			_size -= n;
+			if (n > 0)
+				_size -= n;
+			for (iterator it = last; it < end(); it++) {
+				*it = *(it + n);
+			}
 			return first;
 		}
 		void swap (vector& x) {
@@ -394,11 +424,11 @@ namespace ft {
 	}
 	template <class T, class Alloc>
 	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		return !(lhs < rhs);
+		return !(rhs < lhs);
 	}
 	template <class T, class Alloc>
 	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		return (lhs < rhs);
+		return !(lhs < rhs);
 	}
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {

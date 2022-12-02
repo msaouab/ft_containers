@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:56:14 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/01 21:02:57 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:52:26 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -549,6 +549,7 @@ int main (){
             std::cout << "size 2 = " << v2.size() << std::endl;
             std::cout << "capacity 2 = " << v2.capacity() << std::endl;
             v2.push_back(5);
+			std::cout << "size: "<< v2.size() << "\n";
             v2.assign(v.begin() + 1, v.end() - 1);
             for (std::vector<int>::iterator i = v2.begin(); i < v2.end() ; i++)
                 std::cout << "\t" << *i ;
@@ -585,6 +586,7 @@ int main (){
             std::cout << "size 2 = " << v2.size() << std::endl;
             std::cout << "capacity 2 = " << v2.capacity() << std::endl;
             v2.push_back(5);
+			std::cout << "size: "<< v2.size() << "\n";
             v2.assign(v.begin() + 1, v.end() - 1);
             for (ft::vector<int>::iterator i = v2.begin(); i < v2.end() ; i++)
                 std::cout << "\t" << *i ;
@@ -720,7 +722,7 @@ int main (){
                     
             it = v.begin();
             it = v.insert ( it , 200 );
-            for (std::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
+			for (std::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
                 std::cout << "\t" << *i ;
             std::cout << std::endl;
             
@@ -731,6 +733,7 @@ int main (){
             std::cout << std::endl;
             
             it = v.begin();
+            std::cout << *it << "\n";
             std::vector<int> v1 (2,400);
             v.insert (it + 2 , v1.begin() , v1.end());
             for (std::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
@@ -760,9 +763,10 @@ int main (){
                     
             it = v.begin();
             it = v.insert( it , 200 );
-            for (ft::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
+			for (ft::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
                 std::cout << "\t" << *i ;
             std::cout << std::endl;
+
             it = v.begin() + 2;
             v.insert ( it , 6 , 10 );
             for (ft::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
@@ -770,6 +774,7 @@ int main (){
             std::cout << std::endl;
 
             it = v.begin();
+            std::cout << *it << "\n";
             ft::vector<int> v1 (2,400);
             v.insert (it + 2 , v1.begin() , v1.end());
             for (ft::vector<int>::iterator i = v.begin(); i < v.end() ; i++)
