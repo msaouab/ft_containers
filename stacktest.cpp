@@ -70,7 +70,7 @@ int main() {
             ft::vector<int> v3 (3, 100);          
             std::vector<int> v4 (5, 100);        
 
-            std::stack<int,ft::vector<int> > s1 (v1);  
+            std::stack<int,ft::vector<int> > s1 (v1);
             std::stack<int,std::vector<int> > s2 (v2);
             std::stack<int,ft::vector<int> > s3 (v3);  
             std::stack<int,std::vector<int> > s4 (v4);
@@ -115,18 +115,18 @@ int main() {
         {
             ft::vector<int> v1 ;
             std::vector<int> v2 (10);
-            // ft::vector<int> v3 (3, 100);
+            ft::vector<int> v3 (3, 100);
             std::vector<int> v4 (5, 200);        
 
             std::stack<int,ft::vector<int> > s1 (v1);
             std::stack<int,std::vector<int> > s2 (v2);
-            // std::stack<int,ft::vector<int> > s3 (v3);
+            std::stack<int,ft::vector<int> > s3 (v3);
             std::stack<int,std::vector<int> > s4 (v4);
 
-            // ? if you uncomment this it will segfault since the stack is empty
-            // std:: cout << "s1 top = " << s1.top() << std::endl;
+            // // ? if you uncomment this it will segfault since the stack is empty
+            std:: cout << "s1 top = " << s1.top() << std::endl;
             std:: cout << "s2 top = " << s2.top() << std::endl;
-            // std:: cout << "s3 top = " << s3.top() << std::endl;
+            std:: cout << "s3 top = " << s3.top() << std::endl;
             std:: cout << "s4 top = " << s4.top() << std::endl;
         }
         catch(const std::exception& e)
@@ -214,7 +214,7 @@ int main() {
             std::stack<int,std::vector<int> > s2 (v2);
 
             // ? if you uncomment this it will segfault since the stack is empty
-            // std:: cout << "s1 top = " << s1.top() << std::endl;
+            std:: cout << "s1 top = " << s1.top() << std::endl;
             std:: cout << "s2 top = " << s2.top() << std::endl;
 
             s1.push(1);
@@ -246,7 +246,7 @@ int main() {
             ft::stack<int,std::vector<int> > s2 (v2);
 
             // ? if you uncomment this it should segfault since the stack is empty
-            // std:: cout << "s1 top = " << s1.top() << std::endl;
+            std:: cout << "s1 top = " << s1.top() << std::endl;
             std:: cout << "s2 top = " << s2.top() << std::endl;
 
             s1.push(1);

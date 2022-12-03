@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:57:09 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/02 20:43:38 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/03 14:16:04 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,15 @@ namespace ft {
 
 /* ******************************* Destructor ******************************* */
 		~vector() {
-			_allocate.deallocate(_data, _cap);
+			if (_cap > 0)
+				_allocate.deallocate(_data, _cap);
 		}
 
 /* ******************************** Operator ******************************** */
 		vector& operator= (const vector& rhs) {
 			if (this != &rhs) {
-				_allocate.deallocate(_data, _cap);
+				if (_cap > 0)
+					_allocate.deallocate(_data, _cap);
 				_allocate = rhs._allocate;
 				_data = _allocate.allocate(rhs._size);
 				_cap = rhs._cap;
@@ -428,7 +430,7 @@ namespace ft {
 	}
 	template <class T, class Alloc>
 	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		return !(lhs < rhs);
+		return !(lhs <= rhs);
 	}
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {

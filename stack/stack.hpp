@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:57:04 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/02 22:01:03 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/03 14:12:41 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,27 @@ namespace ft {
 
 	template <class T, class Container>
 	bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs == rhs);
+		return (lhs.s == rhs.s);
 	}
 	template <class T, class Container>
 	bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs != rhs);
+		return (lhs.s != rhs.s);
 	}
 	template <class T, class Container>
 	bool operator<  (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs < rhs);
+		return (lhs.s < rhs.s);
 	}
 	template <class T, class Container>
 	bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs <= rhs);
+		return (lhs.s <= rhs.s);
 	}
 	template <class T, class Container>
 	bool operator>  (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs > rhs);
+		return (lhs.s > rhs.s);
 	}
 	template <class T, class Container>
 	bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return (lhs >= rhs);
+		return (lhs.s >= rhs.s);
 	}
 }
 
