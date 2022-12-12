@@ -138,24 +138,23 @@ class RedBlackTree {
 
   void deleteNodeHelper(NodePtr node, int key) {
     NodePtr z = TNULL;
-    NodePtr x, y;
+    NodePtr x;
+	NodePtr y;
     while (node != TNULL) {
       if (node->data == key) {
         z = node;
       }
-
       if (node->data <= key) {
         node = node->right;
-      } else {
+      }
+	  else {
         node = node->left;
       }
     }
-
     if (z == TNULL) {
       cout << "Key not found in the tree" << endl;
       return;
     }
-
     y = z;
     int y_original_color = y->color;
     if (z->left == TNULL) {
@@ -240,7 +239,7 @@ class RedBlackTree {
         indent += "   ";
       } else {
         cout << "L----";
-        indent += "|  ";
+        indent += "|\t";
       }
 
       string sColor = root->color ? "RED" : "BLACK";
@@ -410,17 +409,20 @@ class RedBlackTree {
 };
 
 int main() {
-  RedBlackTree bst;
-  bst.insert(55);
-  bst.insert(40);
-  bst.insert(65);
-  bst.insert(60);
-  bst.insert(75);
-  bst.insert(57);
+	RedBlackTree bst;
+	bst.insert(10);
+	bst.insert(9);
+	bst.insert(8);
+	bst.insert(7);
+	bst.insert(6);
+	bst.insert(4);
+	bst.insert(5);
+	bst.insert(3);
+	bst.insert(2);
+	bst.insert(10);
 
-  bst.printTree();
-  cout << endl
-     << "After deleting" << endl;
-  bst.deleteNode(40);
-  bst.printTree();
+	bst.printTree();
+	cout << endl << "After deleting" << endl;
+	bst.deleteNode(2);
+	bst.printTree();
 }

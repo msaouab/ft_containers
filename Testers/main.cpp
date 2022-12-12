@@ -1,6 +1,18 @@
-#include <iostream>
-#include <string>
-#include <deque>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/10 14:05:52 by msaouab           #+#    #+#             */
+/*   Updated: 2022/12/03 16:24:56 by msaouab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include <iostream>
+# include <string>
+# include <deque>
 #if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
