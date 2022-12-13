@@ -29,7 +29,7 @@ int main() {
 
 	tree.printTree();
 
-	tree.deleteNode(4);
+	// tree.deleteNode(4);
 	tree.deleteNode(69);
 	tree.deleteNode(70);
 	tree.deleteNode(15);
@@ -49,10 +49,6 @@ int main() {
 	tree.deleteNode(52);
 	tree.deleteNode(76);
 	tree.deleteNode(49);
-	tree.deleteNode(69);
-	tree.deleteNode(69);
-	tree.deleteNode(69);
-	tree.deleteNode(69);
 
 	tree.printTree();
 }

@@ -12,9 +12,9 @@
 
 
 
- # Resources
+# Resources
 
  - Vector ([cplusplus](https://cplusplus.com/reference/vector/vector/));
  - Stack ([cplusplus](https://cplusplus.com/reference/stack/stack/));
+ - RedBlack Tree ([programiz](https://www.programiz.com/dsa/red-black-tree));
  - map ([]());
- - RedBlack Tree ([]());

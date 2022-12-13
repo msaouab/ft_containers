@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/11 20:01:13 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:48:54 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ namespace ft {
 			RedBlackTree(const RedBlackTree &rhs) : tnil(nullptr), root(nullptr) {
 				*this = rhs;
 			}
+			~RedBlackTree() {
+				clear();
+				_node_allocate.destroy(tnil);
+				_node_allocate.deallocate(tnil, 1);
+			}
+
+			void	clear() {
+				if (root == tnil)
+					return ;
+				ft_free(root);
+				root = tnil;
+				_size = 0;
+			}
+
 			nodePtr	getroot() const {
 				return root;
 			}
@@ -198,7 +212,7 @@ namespace ft {
 				_node_allocate.deallocate(node, 1);
 			}
 
-			nodePtr	min(nodePtr node) {
+			nodePtr	minRight(nodePtr node) {
 				if (node == nullptr)
 					return (nullptr);
 				while (node->left != tnil)
@@ -206,7 +220,7 @@ namespace ft {
 				return node;
 			}
 
-			nodePtr	max(nodePtr node) {
+			nodePtr	maxRight(nodePtr node) {
 				if (node == nullptr)
 					return (nullptr);
 				while (node->right != tnil)
@@ -214,14 +228,14 @@ namespace ft {
 				return node;
 			}
 
-			void	rbTransplant(nodePtr node1, nodePtr node2) {
-				if (node1->parent == nullptr)
-					root = node2;
-				else if (node1 == node1->parent->left)
-					node1->parent->left = node2;
+			void	rbTransplant(nodePtr first, nodePtr second) {
+				if (first->parent == nullptr)
+					root = second;
+				else if (first == first->parent->left)
+					first->parent->left = second;
 				else
-					node1->parent->right = node2;
-				node2->parent = node1->parent;
+					first->parent->right = second;
+				second->parent = first->parent;
 			}
 
 			void	fixdelete(nodePtr node) {
@@ -230,20 +244,20 @@ namespace ft {
 				while (node != root && node->color == BLACK) {
 					if (node == node->parent->left) {
 						tmp = node->parent->right;
-						if (node->color == RED) {
+						if (tmp->color == RED) {
 							tmp->color = BLACK;
 							node->parent->color = RED;
 							leftrotate(node->parent);
 							tmp = node->parent->right;
 						}
 						if (tmp->left->color == BLACK && tmp->right->color == BLACK) {
-							tmp->color = BLACK;
+							tmp->color = RED;
 							node = node->parent;
 						}
 						else {
-							if (tmp->right->color == RED) {
-								tmp->left->color = RED;
-								tmp->color = BLACK;
+							if (tmp->right->color == BLACK) {
+								tmp->left->color = BLACK;
+								tmp->color = RED;
 								rightrotate(tmp);
 								tmp = node->parent->right;
 							}
@@ -256,13 +270,13 @@ namespace ft {
 					}
 					else {
 						tmp = node->parent->left;
-						if (tmp->color == 1) {
-							tmp->color = RED;
+						if (tmp->color == RED) {
+							tmp->color = BLACK;
 							node->parent->color = RED;
 							rightrotate(node->parent);
 							tmp = node->parent->left;
 						}
-						if (tmp->right->color == BLACK && tmp->right->color == BLACK) {
+						if (tmp->right->color == BLACK && tmp->left->color == BLACK) {
 							tmp->color = RED;
 							node = node->parent;
 						}
@@ -274,8 +288,8 @@ namespace ft {
 								tmp = node->parent->left;
 							}
 							tmp->color = node->parent->color;
-							node->parent->color = 0;
-							tmp->left->color = 0;
+							node->parent->color = BLACK;
+							tmp->left->color = BLACK;
 							rightrotate(node->parent);
 							node = root;
 						}
@@ -291,7 +305,7 @@ namespace ft {
 				nodePtr	tmp2;
 
 				node = this->root;
-				current = tnil;
+				// current = tnil;
 				while (node != tnil) {
 					if (node->data == value)
 						current = node;
@@ -315,7 +329,7 @@ namespace ft {
 					rbTransplant(current, current->left);
 				}
 				else {
-					tmp2 = min(current->right);
+					tmp2 = minRight(current->right);
 					oldcolor = tmp2->color;
 					tmp1 = tmp2->right;
 					if (tmp2->parent == current)
@@ -333,6 +347,8 @@ namespace ft {
 				ft_free(current);
 				if (oldcolor == BLACK)
 					fixdelete(tmp1);
+				// tnil->parent = nullptr;
+				// _size--;
 			}
 
 			void printer(nodePtr root, std::string indent, bool last) {
@@ -356,6 +372,7 @@ namespace ft {
 			void	printTree() {
 				if (root)
 					printer(this->root, "", true);
+				std::cout << "|---------------------------------|\n";
 			}
 			
 	};
