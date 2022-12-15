@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/13 13:48:54 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/15 19:41:09 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ namespace ft {
 					parent->left = new_node;
 				else
 					parent->right = new_node;
+				_size++;
 				if (new_node->parent == nullptr) {
 					new_node->color = BLACK;
 					return ;
@@ -305,7 +306,7 @@ namespace ft {
 				nodePtr	tmp2;
 
 				node = this->root;
-				// current = tnil;
+				current = tnil;
 				while (node != tnil) {
 					if (node->data == value)
 						current = node;
@@ -347,8 +348,8 @@ namespace ft {
 				ft_free(current);
 				if (oldcolor == BLACK)
 					fixdelete(tmp1);
-				// tnil->parent = nullptr;
-				// _size--;
+				tnil->parent = nullptr;
+				_size--;
 			}
 
 			void printer(nodePtr root, std::string indent, bool last) {
@@ -374,7 +375,13 @@ namespace ft {
 					printer(this->root, "", true);
 				std::cout << "|---------------------------------|\n";
 			}
-			
+
+			size_type	size() const {
+				return (_size);
+			}
+			size_type	max_size() const {
+				return (_node_allocate.max_size());
+			}
 	};
 }	// namespace ft
 
