@@ -17,4 +17,5 @@
  - Vector ([cplusplus](https://cplusplus.com/reference/vector/vector/));
  - Stack ([cplusplus](https://cplusplus.com/reference/stack/stack/));
  - RedBlack Tree ([programiz](https://www.programiz.com/dsa/red-black-tree));
- - map ([]());
+ - map ([cplusplus](https://legacy.cplusplus.com/reference/map/map/));
+ - iterator ([iterators](https://www.internalpointers.com/post/writing-custom-iterators-modern-cpp));

@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/15 19:41:09 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/17 19:15:07 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ namespace ft {
 			typedef ptrdiff_t	differnce_type;
 		// typedef treeIterator
 		private:
-			nodePtr	root;
-			nodePtr	tnil;
-			size_type		_size;
-			allocator_type	_allocate;
+			nodePtr				root;
+			nodePtr				tnil;
+			size_type			_size;
+			allocator_type		_allocate;
 			node_allocator_type	_node_allocate;
 			key_compare			_compare;
+			nodePtr				past_the_end;
+			nodePtr				before_the_begin;
 		public:
 			explicit	RedBlackTree() {
 				tnil = _node_allocate.allocate(1);
@@ -62,6 +64,16 @@ namespace ft {
 				tnil->color = BLACK;
 				root = tnil;
 				_size = 0;
+				before_the_begin = _node_allocate.allocate(1);
+				_node_allocate.construct(before_the_begin, node_type(value_type()));
+				before_the_begin->color = BLACK;
+				before_the_begin->left = tnil;
+				before_the_begin->right = tnil;
+				past_the_end = _node_allocate.allocate(1);
+				_node_allocate.construct(past_the_end, node_type(value_type()));
+				past_the_end->color = BLACK;
+				past_the_end->left = tnil;
+				past_the_end->right = tnil;
 			}
 			RedBlackTree(const RedBlackTree &rhs) : tnil(nullptr), root(nullptr) {
 				*this = rhs;
@@ -70,7 +82,35 @@ namespace ft {
 				clear();
 				_node_allocate.destroy(tnil);
 				_node_allocate.deallocate(tnil, 1);
+				_node_allocate.destroy(before_the_begin);
+				_node_allocate.deallocate(before_the_begin, 1);
+				_node_allocate.destroy(past_the_end);
+				_node_allocate.deallocate(past_the_end, 1);
 			}
+			// RedBlackTree	copy(nodePtr _root, nodePtr _tnil, nodePtr _before, nodePtr _past) {
+			// 	if (_root == _tnil || _root == _before || _root == _past);
+			// 		return tnil;
+			// 	nodePtr newnode = _node_allocate.allocate(1);
+			// 	_node_allocate.construct(newnode, node_type(value_type()));
+			// 	newnode->color = BLACK;
+			// 	newnode->left = copy(newnode->left, _tnil, _before, _past);
+			// 	newnode->right = copy(newnode->right, _tnil, _before, _past);
+			// 	newnode->parent = nullptr;
+			// 	if (newnode->left != tnil)
+			// 		newnode->parent->left = newnode;
+			// 	if (newnode->right != tnil)
+			// 		newnode->parent->right = newnode;
+			// 	return (newnode);
+			// }
+			// RedBlackTree	&operator=(const RedBlackTree &rhs) {
+			// 	if (this != &rhs) {
+			// 		this->_size = rhs._size;
+			// 		this->_allocate = rhs._allocate;
+			// 		this->_compare = rhs._compare;
+			// 		this->_node_allocate = rhs._node_allocate;
+			// 		root = copy(rhs.root, rhs.tnil, rhs.before_the_begin, rhs.past_the_end);
+			// 	}
+			// }
 
 			void	clear() {
 				if (root == tnil)
@@ -87,6 +127,43 @@ namespace ft {
 				return tnil;
 			}
 
+			nodePtr	find (const value_type& k) {
+				nodePtr	current;
+				nodePtr	node;
+
+				node = nullptr;
+				while (current != tnil) {
+					if (!_compare(current->data, k) || _compare(current->data, k))
+						node = current;
+					if (_compare(current->data, k))
+						current = current->right;
+					else
+						current = current->right;
+					return (node);
+				}
+			}
+			nodePtr	begin() const {
+				if (root == tnil)
+					return end();
+				nodePtr	_min = min(root);
+				if (min() == before_the_begin)
+					return (_min->parent);
+				return _min;
+			}
+			nodePtr	rbegin() const {
+				if (root == tnil)
+					return rend();
+				nodePtr	_max = max(root);
+				if (max() == past_the_end)
+					return (_max->parent);
+				return _max;
+			}
+			nodePtr	end() const {
+				return (past_the_end);
+			}
+			nodePtr	rend() const {
+				return (before_the_begin);
+			}
 			void	leftrotate(nodePtr node)
 			{
 				nodePtr	tmp;
@@ -213,7 +290,7 @@ namespace ft {
 				_node_allocate.deallocate(node, 1);
 			}
 
-			nodePtr	minRight(nodePtr node) {
+			nodePtr	min(nodePtr node) {
 				if (node == nullptr)
 					return (nullptr);
 				while (node->left != tnil)
@@ -221,7 +298,7 @@ namespace ft {
 				return node;
 			}
 
-			nodePtr	maxRight(nodePtr node) {
+			nodePtr	max(nodePtr node) {
 				if (node == nullptr)
 					return (nullptr);
 				while (node->right != tnil)
@@ -330,7 +407,7 @@ namespace ft {
 					rbTransplant(current, current->left);
 				}
 				else {
-					tmp2 = minRight(current->right);
+					tmp2 = min(current->right);
 					oldcolor = tmp2->color;
 					tmp1 = tmp2->right;
 					if (tmp2->parent == current)
