@@ -37,20 +37,23 @@ int main() {
 	tree.deleteNode(15);
 	tree.deleteNode(8);
 	tree.deleteNode(73);
-	tree.deleteNode(97);
-	tree.deleteNode(51);
-	tree.deleteNode(78);
-	tree.deleteNode(82);
-	tree.deleteNode(50);
-	tree.deleteNode(27);
-	tree.deleteNode(64);
-	tree.deleteNode(48);
-	tree.deleteNode(58);
-	tree.deleteNode(99);
-	tree.deleteNode(79);
-	tree.deleteNode(52);
-	tree.deleteNode(76);
-	tree.deleteNode(49);
+	// tree.deleteNode(97);
+	// tree.deleteNode(51);
+	// tree.deleteNode(78);
+	// tree.deleteNode(82);
+	// tree.deleteNode(50);
+	// tree.deleteNode(27);
+	// tree.deleteNode(64);
+	// tree.deleteNode(48);
+	// tree.deleteNode(58);
+	// tree.deleteNode(99);
+	// tree.deleteNode(79);
+	// tree.deleteNode(52);
+	// tree.deleteNode(76);
+	// tree.deleteNode(49);
+
+	std::cout << "pair called the Default iterator 1" << std::endl;
+	std::cout << tree.find(49) << std::endl;
 
 	tree.printTree();
 	std::cout << tree.size() << '\n';

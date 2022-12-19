@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:39:49 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/30 15:45:07 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/19 15:37:47 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <iostream>
 # include <string>
+# include <algorithm>
 # include <memory>
 # include "./enable_if.hpp"
 # include "./equal.hpp"

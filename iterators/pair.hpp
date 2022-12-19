@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:06 by msaouab           #+#    #+#             */
-/*   Updated: 2022/11/30 14:13:58 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:33:15 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,30 @@
 namespace ft {
 	template <class T1, class T2>
 	class pair {
-		private:
-			typedef T1 first_type;
-			typedef T2 second_type;
+		// private:
+		// 	typedef T1 first_type;
+		// 	typedef T2 second_type;
 		public:
-			first_type	first;
-			second_type	second;
+			T1	first;
+			T2	second;
+
 			pair() : first(), second() {
-				std::cout << "pair called the Default Constructor" << std::endl;
+				// std::cout << "pair called the Default Constructor" << std::endl;
 			}
 			template <class U, class V>
 			pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {
-				std::cout << "pair called the Default Constructor" << std::endl;
+				// std::cout << "pair called the Default Constructor" << std::endl;
 			}
-			pair (const first_type& a, const second_type& b) : first(a), second(b) {
-				std::cout << "pair called the Copy Constructor" << std::endl;
+			pair (const T1 & a, const T2& b) : first(a), second(b) {
+				// std::cout << "pair called the Copy Constructor" << std::endl;
 			}
 			~pair() {
-				std::cout << "pair called the Destructor" << std::endl;
+				// std::cout << "pair called the Destructor1" << std::endl;
 			}
 			pair& operator= (const pair& rhs) {
 				if (this != &rhs) {
-					first = rhs.first;
-					second = rhs.second;
+					this->first = rhs.first;
+					this->second = rhs.second;
 				}
 				return *this;
 			}

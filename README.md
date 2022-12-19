@@ -18,4 +18,4 @@
  - Stack ([cplusplus](https://cplusplus.com/reference/stack/stack/));
  - RedBlack Tree ([programiz](https://www.programiz.com/dsa/red-black-tree));
  - map ([cplusplus](https://legacy.cplusplus.com/reference/map/map/));
- - iterator ([iterators](https://www.internalpointers.com/post/writing-custom-iterators-modern-cpp));
+ - iterator ([iterators](https://www.internalpointers.com/post/writing-custom-iterators-modern-cpp)) ([cplusplus](https://legacy.cplusplus.com/reference/iterator/reverse_iterator/));

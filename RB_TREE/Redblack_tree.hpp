@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/17 19:15:07 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/19 21:23:18 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define REDBLACK_TREE_CPP
 
 # include <iostream>
+# include <functional>
 # include "../stack/stack.hpp"
+// # include "../iterators/iterator.hpp"
+# include "../iterators/pair.hpp"
 # define BLACK 0
 # define RED 1
 
@@ -28,11 +31,17 @@ namespace ft {
 		node<T>*	right;
 		node<T>*	left;
 
-		explicit	node() : data(NULL), color(RED), parent(NULL), left(NULL), right(NULL) {}
-		explicit	node(T data) : data(data), color(RED), parent(NULL), left(NULL), right(NULL) {}
+		explicit	node() : data(nullptr), color(RED), parent(nullptr), left(nullptr), right(nullptr) {}
+		explicit	node(T data) : data(data), color(RED), parent(nullptr), left(nullptr), right(nullptr) {}
 		
 		~node() {}
 	};
+
+	template<class T>
+	class TreeIterator;
+
+	template <class Iterator>
+	class TreeReverseIterator;
 
 	template < class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	class RedBlackTree {
@@ -45,20 +54,23 @@ namespace ft {
 			typedef	Alloc allocator_type;
 			typedef	std::allocator<node_type> node_allocator_type;
 			typedef Compare	key_compare;
-			// typedef size_t	size_type;
-			typedef ptrdiff_t	differnce_type;
-		// typedef treeIterator
+			typedef TreeIterator<value_type> iterator;
+			typedef TreeIterator<value_type> const_iterator;
+			typedef TreeReverseIterator<iterator> reverse_iterator;
+			typedef TreeReverseIterator<const_iterator> const_reverse_iterator;
 		private:
 			nodePtr				root;
 			nodePtr				tnil;
-			size_type			_size;
-			allocator_type		_allocate;
-			node_allocator_type	_node_allocate;
-			key_compare			_compare;
 			nodePtr				past_the_end;
 			nodePtr				before_the_begin;
+			size_type			_size;
+			key_compare			_compare;
+			allocator_type		_allocate;
+			node_allocator_type	_node_allocate;
 		public:
-			explicit	RedBlackTree() {
+			explicit	RedBlackTree(
+				const key_compare &comp = key_compare(),
+                const allocator_type &alloc = allocator_type()) : _allocate(alloc), _compare(comp) {
 				tnil = _node_allocate.allocate(1);
 				_node_allocate.construct(tnil, node_type(value_type()));
 				tnil->color = BLACK;
@@ -87,30 +99,31 @@ namespace ft {
 				_node_allocate.destroy(past_the_end);
 				_node_allocate.deallocate(past_the_end, 1);
 			}
-			// RedBlackTree	copy(nodePtr _root, nodePtr _tnil, nodePtr _before, nodePtr _past) {
-			// 	if (_root == _tnil || _root == _before || _root == _past);
-			// 		return tnil;
-			// 	nodePtr newnode = _node_allocate.allocate(1);
-			// 	_node_allocate.construct(newnode, node_type(value_type()));
-			// 	newnode->color = BLACK;
-			// 	newnode->left = copy(newnode->left, _tnil, _before, _past);
-			// 	newnode->right = copy(newnode->right, _tnil, _before, _past);
-			// 	newnode->parent = nullptr;
-			// 	if (newnode->left != tnil)
-			// 		newnode->parent->left = newnode;
-			// 	if (newnode->right != tnil)
-			// 		newnode->parent->right = newnode;
-			// 	return (newnode);
-			// }
-			// RedBlackTree	&operator=(const RedBlackTree &rhs) {
-			// 	if (this != &rhs) {
-			// 		this->_size = rhs._size;
-			// 		this->_allocate = rhs._allocate;
-			// 		this->_compare = rhs._compare;
-			// 		this->_node_allocate = rhs._node_allocate;
-			// 		root = copy(rhs.root, rhs.tnil, rhs.before_the_begin, rhs.past_the_end);
-			// 	}
-			// }
+			RedBlackTree	&operator=(const RedBlackTree &rhs) {
+				if (this != &rhs) {
+					_size = rhs._size;
+					_allocate = rhs._allocate;
+					_compare = rhs._compare;
+					_node_allocate = rhs._node_allocate;
+					root = copy(rhs.root, rhs.tnil, rhs.before_the_begin, rhs.past_the_end);
+				}
+				return (*this);
+			}
+			nodePtr	copy(nodePtr _root, nodePtr _tnil, nodePtr _before, nodePtr _past) {
+				if (_root == _tnil || _root == _before || _root == _past)
+					return tnil;
+				nodePtr newnode = _node_allocate.allocate(1);
+				_node_allocate.construct(newnode, node_type(_root->data));
+				newnode->color = _root->color;
+				newnode->left = copy(_root->left, _tnil, _before, _past);
+				newnode->right = copy(_root->right, _tnil, _before, _past);
+				newnode->parent = nullptr;
+				if (newnode->left != tnil)
+					newnode->left->parent = newnode;
+				if (newnode->right != tnil)
+					newnode->right->parent = newnode;
+				return (newnode);
+			}
 
 			void	clear() {
 				if (root == tnil)
@@ -121,42 +134,72 @@ namespace ft {
 			}
 
 			nodePtr	getroot() const {
-				return root;
+				return (root);
 			}
 			nodePtr	gettnil() const {
-				return tnil;
+				return (tnil);
 			}
 
-			nodePtr	find (const value_type& k) {
-				nodePtr	current;
+			void setExtremes1() {
+				nodePtr _min = min(root);
+				nodePtr _max = max(root);
+
+				if (_min == before_the_begin)
+					_min = before_the_begin->parent;
+
+				if (_min)
+					_min->left = tnil;
+
+				if (_max == past_the_end)
+					_max = past_the_end->parent;
+
+				if (_max)
+					_max->right = tnil;
+			}
+
+			void setExtremes2() {
+				nodePtr _min = min(root);
+				nodePtr _max = max(root);
+
+				if (_min)
+					_min->left = before_the_begin;
+				before_the_begin->parent = _min;
+
+				if (_max)
+					_max->right = past_the_end;
+				past_the_end->parent = _max;
+			}
+
+			nodePtr	find (const value_type& k) const {
+				nodePtr	current = root;
 				nodePtr	node;
 
 				node = nullptr;
 				while (current != tnil) {
-					if (!_compare(current->data, k) || _compare(current->data, k))
+					if (!(_compare(current->data, k) || _compare(k, current->data)))
 						node = current;
 					if (_compare(current->data, k))
 						current = current->right;
 					else
-						current = current->right;
-					return (node);
+						current = current->left;
 				}
+				return (node);
 			}
 			nodePtr	begin() const {
 				if (root == tnil)
-					return end();
+					return (past_the_end);
 				nodePtr	_min = min(root);
-				if (min() == before_the_begin)
+				if (_min == before_the_begin)
 					return (_min->parent);
-				return _min;
+				return (_min);
 			}
 			nodePtr	rbegin() const {
 				if (root == tnil)
-					return rend();
+					return (before_the_begin);
 				nodePtr	_max = max(root);
-				if (max() == past_the_end)
+				if (_max == past_the_end)
 					return (_max->parent);
-				return _max;
+				return (_max);
 			}
 			nodePtr	end() const {
 				return (past_the_end);
@@ -205,6 +248,12 @@ namespace ft {
 			void	recolor(nodePtr node) {
 				nodePtr	tmp;
 
+				if (node->parent == nullptr) {
+					node->color = BLACK;
+					return ;
+				}
+				if (node->parent->parent == nullptr)
+					return ;
 				while (node->parent->color == RED) {
 					if (node->parent == node->parent->parent->right) {
 						tmp = node->parent->parent->left;
@@ -248,20 +297,21 @@ namespace ft {
 				root->color = BLACK;
 			}
 
-			void	insert(int value) {
+			void	insert(const value_type & value) {
+				setExtremes1();
 				nodePtr new_node = _node_allocate.allocate(1);
 				_node_allocate.construct(new_node, node_type(value));
 				new_node->left = tnil;
 				new_node->right = tnil;
-				new_node->parent = nullptr;
-				new_node->data = value;
-				new_node->color = RED;
+				// new_node->parent = nullptr;
+				// new_node->data = value;
+				// new_node->color = RED;
 
 				nodePtr parent = nullptr;
 				nodePtr curr = this->root;
 				while (curr != tnil) {
 					parent = curr;
-					if (new_node->data < curr->data)
+					if (_compare(new_node->data, curr->data))
 						curr = curr->left;
 					else
 						curr = curr->right;
@@ -281,29 +331,59 @@ namespace ft {
 				if (new_node->parent->parent == nullptr)
 					return ;
 				recolor(new_node);
+				setExtremes2();
 			}
 
-			void	ft_free(nodePtr node) {
+			void	freeNode(nodePtr node) {
 				if (node == tnil)
 					return ;
 				_node_allocate.destroy(node);
 				_node_allocate.deallocate(node, 1);
 			}
+			void	ft_free(nodePtr node) {
+				if (node == tnil || node == before_the_begin || node == past_the_end)
+					return ;
+				ft_free(node->left);
+				ft_free(node->right);
+				freeNode(node);
+			}
 
-			nodePtr	min(nodePtr node) {
-				if (node == nullptr)
+			static nodePtr	min(nodePtr node) {
+				if (!node || !node->left)
 					return (nullptr);
-				while (node->left != tnil)
+				while (node->left->parent)
 					node = node->left;
 				return node;
 			}
 
-			nodePtr	max(nodePtr node) {
-				if (node == nullptr)
+			static nodePtr	max(nodePtr node) {
+				if (!node || !node->right)
 					return (nullptr);
-				while (node->right != tnil)
+				while (node->right->parent)
 					node = node->right;
 				return node;
+			}
+
+			static nodePtr	successor(nodePtr node) {
+				if (node->right && node->right->parent)
+					return (min(node->right));
+				nodePtr	current = node->parent;
+				while (current && node == current->right) {
+					node = current;
+					current = current->parent;
+				}
+				return (current);
+			}
+
+			static nodePtr	predecessor(nodePtr node) {
+				if (node->left && node->left->parent)
+					return (max(node->left));
+				nodePtr	current = node->parent;
+				while (current && node == current->left) {
+					node = current;
+					current = current->parent;
+				}
+				return (current);
 			}
 
 			void	rbTransplant(nodePtr first, nodePtr second) {
@@ -376,7 +456,8 @@ namespace ft {
 				node->color = BLACK;
 			}
 
-			void	deleteNode(int value) {
+			void	deleteNode(const value_type &value) {
+				setExtremes1();
 				nodePtr	node;
 				nodePtr	current;
 				nodePtr	tmp1;
@@ -393,7 +474,7 @@ namespace ft {
 						node = node->left;
 				}
 				if (current == tnil) {
-					std::cout << "this " << value << " not found in the Tree" << std::endl;
+					std::cout << "not found in the Tree" << std::endl;
 					return ;
 				}
 				tmp2 = current;
@@ -427,6 +508,7 @@ namespace ft {
 					fixdelete(tmp1);
 				tnil->parent = nullptr;
 				_size--;
+				setExtremes2();
 			}
 
 			void printer(nodePtr root, std::string indent, bool last) {
@@ -460,6 +542,129 @@ namespace ft {
 				return (_node_allocate.max_size());
 			}
 	};
+
+
+	template<class T>
+	class TreeIterator
+	{
+		public:
+			typedef std::size_t						size_type;
+			typedef T								value_type;
+			typedef value_type&						reference;
+			typedef value_type*						pointer;
+			typedef std::ptrdiff_t					difference_type;
+			typedef std::bidirectional_iterator_tag	iterator_category;
+			typedef node<value_type>*				nodePtr;
+		private:
+			nodePtr	node;
+		public:
+			// TreeIterator() {}
+			TreeIterator(nodePtr _node = nullptr) : node(_node) {}
+			TreeIterator(const TreeIterator &rhs) {
+				*this = rhs;
+			}
+			TreeIterator &operator=(const TreeIterator &rhs) {
+				if (this != &rhs)
+					node = rhs.node;
+				return (*this);
+			}
+			~TreeIterator() {}
+			reference operator*() const {
+				return (node->data);
+			}
+			pointer operator->() const {
+				return &(node->data);
+			}
+			TreeIterator & operator++() {
+				node = RedBlackTree<value_type>::successor(node);
+				return (*this);
+			}
+			TreeIterator operator++(int) {
+				TreeIterator tmp(*this);
+				++*this;
+				return tmp;
+			}
+			TreeIterator & operator--() {
+				node = RedBlackTree<value_type>::predecessor(node);
+				return (*this);
+			}
+			TreeIterator operator--(int) {
+				TreeIterator tmp(*this);
+				--*this;
+				return (tmp);
+			}
+			nodePtr base() const{
+				return (node);
+			}
+			bool operator==(const TreeIterator &rhs) const {
+				return node == rhs.node;
+			}
+			bool operator!=(const TreeIterator &rhs) const {
+				return (node != rhs.node);
+			}
+	};
+
+	template <class Iterator>
+	class TreeReverseIterator {
+		public:
+			typedef Iterator iterator_type;
+			typedef typename iterator_traits<iterator_type>::iterator_category iterator_category;
+			typedef typename iterator_traits<iterator_type>::value_type value_type;
+			typedef typename iterator_traits<iterator_type>::difference_type difference_type;
+			typedef typename iterator_traits<iterator_type>::pointer pointer;
+			typedef typename iterator_traits<iterator_type>::reference reference;
+		
+		private:
+			iterator_type it;
+
+		public:
+			// TreeReverseIterator() {}
+			explicit TreeReverseIterator (iterator_type _it) : it(_it) { }
+
+			template <class Iter>
+			TreeReverseIterator (const TreeReverseIterator<Iter>& rev) : it(rev.it){
+			}
+			TreeReverseIterator & operator=(const TreeReverseIterator &rhs) {
+				if (this != &rhs)
+					it = rhs.it;
+				return *this;
+			}
+			~TreeReverseIterator() {}
+			iterator_type base() const {
+                return it;
+            }
+            reference operator*() const {
+                return *it;
+            }
+			pointer operator->() const {
+                return &(*it);
+            }
+            TreeReverseIterator &operator++() {
+                --it;
+                return *this;
+            }
+            TreeReverseIterator operator++(int) {
+                TreeReverseIterator tmp(*this);
+                ++*this;
+                return (tmp);
+            }
+            TreeReverseIterator &operator--() {
+                ++it;
+                return (*this);
+            }
+            TreeReverseIterator operator--(int) {
+                TreeReverseIterator tmp(*this);
+                --*this;
+                return (tmp);
+            }
+            bool operator==(const TreeReverseIterator &rhs) const {
+                return (it == rhs.it);
+            }
+            bool operator!=(const TreeReverseIterator &rhs) const {
+                return (it != rhs.it);
+            }
+	};
+
 }	// namespace ft
 
 #endif
