@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/19 21:23:18 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/20 15:47:08 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "../iterators/pair.hpp"
 # define BLACK 0
 # define RED 1
+
 
 namespace ft {
 	template<class T>
@@ -106,12 +107,13 @@ namespace ft {
 					_compare = rhs._compare;
 					_node_allocate = rhs._node_allocate;
 					root = copy(rhs.root, rhs.tnil, rhs.before_the_begin, rhs.past_the_end);
+					setExtremes2();
 				}
 				return (*this);
 			}
 			nodePtr	copy(nodePtr _root, nodePtr _tnil, nodePtr _before, nodePtr _past) {
 				if (_root == _tnil || _root == _before || _root == _past)
-					return tnil;
+					return (tnil);
 				nodePtr newnode = _node_allocate.allocate(1);
 				_node_allocate.construct(newnode, node_type(_root->data));
 				newnode->color = _root->color;
@@ -146,13 +148,10 @@ namespace ft {
 
 				if (_min == before_the_begin)
 					_min = before_the_begin->parent;
-
 				if (_min)
 					_min->left = tnil;
-
 				if (_max == past_the_end)
 					_max = past_the_end->parent;
-
 				if (_max)
 					_max->right = tnil;
 			}
@@ -324,12 +323,12 @@ namespace ft {
 				else
 					parent->right = new_node;
 				_size++;
-				if (new_node->parent == nullptr) {
-					new_node->color = BLACK;
-					return ;
-				}
-				if (new_node->parent->parent == nullptr)
-					return ;
+				// if (new_node->parent == nullptr) {
+				// 	new_node->color = BLACK;
+				// 	return ;
+				// }
+				// if (new_node->parent->parent == nullptr)
+				// 	return ;
 				recolor(new_node);
 				setExtremes2();
 			}
@@ -353,7 +352,7 @@ namespace ft {
 					return (nullptr);
 				while (node->left->parent)
 					node = node->left;
-				return node;
+				return (node);
 			}
 
 			static nodePtr	max(nodePtr node) {
@@ -361,7 +360,7 @@ namespace ft {
 					return (nullptr);
 				while (node->right->parent)
 					node = node->right;
-				return node;
+				return (node);
 			}
 
 			static nodePtr	successor(nodePtr node) {
@@ -456,29 +455,60 @@ namespace ft {
 				node->color = BLACK;
 			}
 
+			// void deleteNode(const value_type &key)
+            // {
+			// 	setExtremes1();
+            //     nodePtr node = find(key);
+            //     nodePtr tmp1, tmp2;
+
+            //     if (!node || node == tnil)
+            //         return ;
+            //     tmp2 = node;
+            //     bool isBlack = node->color;
+
+            //     if (node->left == tnil) {
+            //         tmp1 = node->right;
+            //         rbTransplant(node, node->right);
+            //     } else if (node->right == tnil) {
+            //         tmp1 = node->left;
+            //         rbTransplant(node, node->left);
+            //     } else {
+            //         tmp2 = min(node->right);
+            //         isBlack = tmp2->color;
+            //         tmp1 = tmp2->right;
+            //         if (tmp2->parent == node)
+            //             tmp1->parent = tmp2;
+            //         else
+            //         {
+            //             rbTransplant(tmp2, tmp2->right);
+            //             tmp2->right = node->right;
+            //                 tmp2->right->parent = tmp2;
+            //         }
+            //         rbTransplant(node, tmp2);
+            //         tmp2->left = node->left;
+            //             tmp2->left->parent = tmp2;
+            //         tmp2->color = node->color;
+            //     }
+            //     freeNode(node);
+            //     if (isBlack)
+            //         fixdelete(tmp1);
+            //     // ? check if tree is balanced blacks(_root);
+            //     tnil->parent = nullptr;
+            //     _size--;
+			// 	setExtremes2();
+            // }
+
 			void	deleteNode(const value_type &value) {
 				setExtremes1();
-				nodePtr	node;
 				nodePtr	current;
 				nodePtr	tmp1;
 				nodePtr	tmp2;
 
-				node = this->root;
-				current = tnil;
-				while (node != tnil) {
-					if (node->data == value)
-						current = node;
-					if (node->data <= value)
-						node = node->right;
-					else
-						node = node->left;
-				}
-				if (current == tnil) {
-					std::cout << "not found in the Tree" << std::endl;
+				current = find(value);
+				if (!current || current == tnil)
 					return ;
-				}
 				tmp2 = current;
-				int	oldcolor = tmp2->color;
+				int	oldcolor = current->color;
 				if (current->left == tnil) {
 					tmp1 = current->right;
 					rbTransplant(current, current->right);
@@ -503,7 +533,7 @@ namespace ft {
 					tmp2->left->parent = tmp2;
 					tmp2->color = current->color;
 				}
-				ft_free(current);
+				freeNode(current);
 				if (oldcolor == BLACK)
 					fixdelete(tmp1);
 				tnil->parent = nullptr;
@@ -543,7 +573,6 @@ namespace ft {
 			}
 	};
 
-
 	template<class T>
 	class TreeIterator
 	{
@@ -582,7 +611,7 @@ namespace ft {
 			TreeIterator operator++(int) {
 				TreeIterator tmp(*this);
 				++*this;
-				return tmp;
+				return (tmp);
 			}
 			TreeIterator & operator--() {
 				node = RedBlackTree<value_type>::predecessor(node);
@@ -597,7 +626,7 @@ namespace ft {
 				return (node);
 			}
 			bool operator==(const TreeIterator &rhs) const {
-				return node == rhs.node;
+				return (node == rhs.node);
 			}
 			bool operator!=(const TreeIterator &rhs) const {
 				return (node != rhs.node);
@@ -664,7 +693,6 @@ namespace ft {
                 return (it != rhs.it);
             }
 	};
-
 }	// namespace ft
 
 #endif
