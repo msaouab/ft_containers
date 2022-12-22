@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:56:58 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/20 15:39:58 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/20 17:46:06 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define __FT_MAP_HPP_
 
 # include "../RB_TREE/Redblack_tree.hpp"
-# include "../iterators/pair.hpp"
+// # include "../iterators/pair.hpp"
 // # include "../iterators/enable_if.hpp"
 // # include "../iterators/equal.hpp"
 // # include "../iterators/is_integral.hpp"
@@ -196,7 +196,7 @@ namespace ft {
 			key_compare key_comp() const {
 				return (_compare);
 			}
-/* ******************************* Observers ******************************** */
+/* ****************************** Operations ******************************** */
 			iterator find (const key_type& k) {
 				value_type key(k, mapped_type());
 				typename rbt::nodePtr	node = mytree.find(key);
