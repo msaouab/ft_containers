@@ -10,7 +10,14 @@
 
 ## Bonus Part
 
-
+# Testing
+- in Folder `Testers/` we have a files `.cpp` to test all containers and compared with original containers.
+	- if you need to test vector use `c++ Testers/vectortest.cpp`
+	- if you need to test map use `c++ Testers/mapTester.cpp`
+	- if you need to test set use `c++ Testers/setTester.cpp`
+	- if you need to test stack use `c++ Testers/stacktest.cpp`
+	- if you need to test red-black tree use `c++ Testers/testrbt.cpp`
+	- if you need to test for xtra containers use `c++ Testers/xtraTest.cpp`
 
 # Resources
 
