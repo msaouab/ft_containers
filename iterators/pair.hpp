@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:31:06 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/19 16:33:15 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/24 15:40:09 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace ft {
 					this->first = rhs.first;
 					this->second = rhs.second;
 				}
-				return *this;
+				return (*this);
 			}
 	};
 
@@ -54,27 +54,27 @@ namespace ft {
 
 	template <class T1, class T2>
 	bool operator== (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
-		return lhs.first==rhs.first && lhs.second==rhs.second;
+		return (lhs.first==rhs.first && lhs.second==rhs.second);
 	}
 	template <class T1, class T2>
 	bool operator!= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
 		return !(lhs==rhs);
 	}
 	template <class T1, class T2>
-	bool operator<  (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
-		return lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second);
+	bool operator< (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
+		return (lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second));
 	}
 	template <class T1, class T2>
 	bool operator<= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
-		return !(rhs<lhs);
+		return (!(rhs<lhs));
 	}
 	template <class T1, class T2>
-	bool operator>  (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
-		return rhs<lhs;
+	bool operator> (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
+		return (rhs<lhs);
 	}
 	template <class T1, class T2>
 	bool operator>= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
-		return !(lhs<rhs);
+		return (!(lhs<rhs));
 	}
 }
 

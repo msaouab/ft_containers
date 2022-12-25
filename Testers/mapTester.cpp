@@ -66,7 +66,6 @@ int main() {
             m1["a"] = 2;
             m1["b"] = 3;
             m1["d"] = 4;
-
             ft::map<std::string, int> m2(m1.begin(), m1.end());
             ft::map<std::string, int> m3(m1);
 
@@ -90,10 +89,10 @@ int main() {
                 std::cout << "\n" << it->first << "\t" << it->second;
             std::cout << std::endl;
 
-            std::cout << "*********** m3 < normal > ************" << std::endl;
-            for (ft::map<std::string, int>::iterator it = m3.begin() ; it != m3.end(); it++)
-                std::cout << "\n" << it->first << "\t" << it->second;
-            std::cout << std::endl;
+			std::cout << "*********** m3 < normal > ************" << std::endl;
+			for (ft::map<std::string, int>::iterator it = m3.begin() ; it != m3.end(); it++)
+				std::cout << "\n" << it->first << "\t" << it->second;
+			std::cout << std::endl;
 
             std::cout << "*********** m3 < reverse > ************" << std::endl;
             for (ft::map<std::string, int>::reverse_iterator it = m3.rbegin() ; it != m3.rend(); it++)
@@ -846,5 +845,4 @@ int main() {
             std::cerr << e.what() << '\n';
         }
     }
-
 }

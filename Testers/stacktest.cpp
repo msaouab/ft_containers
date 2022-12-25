@@ -3,8 +3,8 @@
 #include <vector>
 #include <iterator>
 
-#include "vector/vector.hpp"
-#include "stack/stack.hpp"
+#include "../vector/vector.hpp"
+#include "../stack/stack.hpp"
 
 
 int main() {

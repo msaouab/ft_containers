@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:57:09 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/03 14:16:04 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/25 12:50:26 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,11 +232,22 @@ namespace ft {
 			_size = n;
 		}
 		void	push_back( const T& value ) {
-			if (_cap == 0)
-				_cap++;
-			if (_cap <= _size)
-				_cap *= 2;
-			copy(_size + 1, value);
+			// if (_cap == 0)
+			// 	_cap++;
+			// if (_cap <= _size)
+			// 	_cap *= 2;
+			// copy(_size + 1, value);
+			// std::cout << _size << ' ';
+			// insert(end(), value);
+			if (_size < _cap)
+				_data[_size++] = value;
+			else {
+				if (_cap == 0)
+					_cap++;
+				else
+					_cap *= 2;
+				copy(_size + 1, value);
+			}
 		}
 		void	pop_back() {
 			_data[_size] = ~value_type();

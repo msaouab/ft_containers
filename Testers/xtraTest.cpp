@@ -1,14 +1,13 @@
 #include <iostream>
 #include <vector>
-#include "./xtra/enable_if.hpp"
-#include "./xtra/is_integral.hpp"
-#include "./xtra/equal.hpp"
-#include "./xtra/lexicographical_compare.hpp"
-#include "./xtra/pair.hpp"
-#include "./iterators/iterator.hpp"
-#include "./vector/vector.hpp"
-#include "./iterators/iterator_traits.hpp"
-#include "./redBlackTree/RedBlackTree.hpp"
+#include "./set/set.hpp"
+# include "./iterators/enable_if.hpp"
+# include "./iterators/equal.hpp"
+# include "./iterators/is_integral.hpp"
+# include "./iterators/iterator_traits.hpp"
+# include "./iterators/lexicographical_compare.hpp"
+# include "./iterators/pair.hpp"
+# include "./iterators/reverse_iterator.hpp"
 
 template <class T>
 typename ft::enable_if<std::is_integral<T>::value,bool>::type
@@ -158,39 +157,39 @@ int main (){
     {
         ft::RedBlackTree<int> test;
 
-		test.add(4);
-		test.add(69);
-		test.add(70);
-		test.add(15);
-		test.add(8);
-		test.add(73);
-		test.add(97);
-		test.add(51);
-		test.add(78);
-		test.add(82);
-		test.add(50);
-		test.add(27);
-		test.add(64);
-		test.add(48);
-		test.add(58);
-		test.add(99);
-		test.add(79);
-		test.add(52);
-		test.add(76);
-		test.add(49);
+		test.insert(4);
+		test.insert(69);
+		test.insert(70);
+		test.insert(15);
+		test.insert(8);
+		test.insert(73);
+		test.insert(97);
+		test.insert(51);
+		test.insert(78);
+		test.insert(82);
+		test.insert(50);
+		test.insert(27);
+		test.insert(64);
+		test.insert(48);
+		test.insert(58);
+		test.insert(99);
+		test.insert(79);
+		test.insert(52);
+		test.insert(76);
+		test.insert(49);
 
-		test.erase(27);
-		test.erase(69);
-		test.erase(73);
-		test.erase(15);
-		test.erase(82);
-		test.erase(4);
-		test.erase(70);
-		test.erase(97);
-		test.erase(58);
-		test.erase(52);
-		test.erase(50);
-		// test.erase(58);
-		test.printTree(3);
+		test.deleteNode(27);
+		test.deleteNode(69);
+		test.deleteNode(73);
+		test.deleteNode(15);
+		test.deleteNode(82);
+		test.deleteNode(4);
+		test.deleteNode(70);
+		test.deleteNode(97);
+		test.deleteNode(58);
+		test.deleteNode(52);
+		test.deleteNode(50);
+		// test.deleteNode(58);
+		test.printTree();
     }
 }

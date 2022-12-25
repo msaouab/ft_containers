@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:39:49 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/19 15:37:47 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/23 19:19:54 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ namespace ft {
 			typedef typename ft::iterator_traits<T>::reference			reference;
 			typedef typename ft::iterator_traits<T>::iterator_category	iterator_category;
 		private:
-			pointer p;
+			pointer it;
 
 		public:
 			iterators() {
 				// std::cout << "iterators called the Default Constructor" << std::endl;
 			}
-			iterators(pointer addr) : p(addr) {
+			iterators(pointer addr) : it(addr) {
 				// std::cout << "iterators called the Default Constructor" << std::endl;
 			}
 			iterators(const iterators& copy) {
@@ -58,77 +58,77 @@ namespace ft {
 			}
 			iterators & operator=(const iterators& rhs) {
 				if (this != &rhs)
-					p = rhs.p;
+					it = rhs.it;
 				return *this;
 			}
 			iterators & operator++() {
-				p++;
+				it++;
 				return *this;
 			}
 			iterators operator++(int) {
 				iterators tmp = *this;
-				p++;
+				it++;
 				return tmp;
 			}
 			iterators & operator--() {
-				p--;
+				it--;
 				return *this;
 			}
 			iterators operator--(int) {
 				iterators tmp = *this;
-				p--;
+				it--;
 				return tmp;
 			}
 			iterators operator+(const difference_type& val) {
 				iterators tmp = *this;
-				tmp.p += val;
+				tmp.it += val;
 				return tmp;
 			}
 			iterators operator+=(const difference_type& val) {
-				p += val;
+				it += val;
 				return *this;
 			}
 			iterators operator-(const difference_type& val) {
 				iterators tmp = *this;
-				tmp.p -= val;
+				tmp.it -= val;
 				return tmp;
 			}
 			iterators operator-=(const difference_type& val) {
-				p -= val;
+				it -= val;
 				return *this;
 			}
 			reference operator[](size_type index) {
-				return *(p + index); // TODO check if it's correct
+				return *(it + index);
 			}
 			pointer operator->() {
-				return p;
+				return it;
 			}
 			reference operator*() {
-				return *p;
+				return *it;
 			}
 			pointer base() const{
-				return p;
+				return it;
 			}
 			bool operator==(const iterators &rhs) const {
-				return p == rhs.p;
+				return it == rhs.it;
 			}
 			bool operator!=(const iterators &rhs) const {
-				return p != rhs.p;
+				return it != rhs.it;
 			}
 			bool operator<(const iterators &rhs) const {
-				return p < rhs.p;
+				return it < rhs.it;
 			}
 			bool operator<=(const iterators &rhs) const {
-				return p <= rhs.p;
+				return it <= rhs.it;
 			}
 			bool operator>(const iterators &rhs) const {
-				return p > rhs.p;
+				return it > rhs.it;
 			}
 			bool operator>=(const iterators &rhs) const {
-				return p >= rhs.p;
+				return it >= rhs.it;
 			}
 			difference_type operator-(const iterators &rhs) {
-				return (p - rhs.p);
+				return (it - rhs.it);
 			}
 	};
 	template <class T>
