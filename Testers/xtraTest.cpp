@@ -1,13 +1,14 @@
-#include <iostream>
-#include <vector>
-#include "./set/set.hpp"
-# include "./iterators/enable_if.hpp"
-# include "./iterators/equal.hpp"
-# include "./iterators/is_integral.hpp"
-# include "./iterators/iterator_traits.hpp"
-# include "./iterators/lexicographical_compare.hpp"
-# include "./iterators/pair.hpp"
-# include "./iterators/reverse_iterator.hpp"
+# include <iostream>
+# include <vector>
+# include "../set/set.hpp"
+# include "../iterators/iterator.hpp"
+# include "../iterators/enable_if.hpp"
+# include "../iterators/equal.hpp"
+# include "../iterators/is_integral.hpp"
+# include "../iterators/iterator_traits.hpp"
+# include "../iterators/lexicographical_compare.hpp"
+# include "../iterators/pair.hpp"
+# include "../iterators/reverse_iterator.hpp"
 
 template <class T>
 typename ft::enable_if<std::is_integral<T>::value,bool>::type

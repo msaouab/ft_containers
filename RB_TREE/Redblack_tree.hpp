@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/20 15:47:08 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/25 13:34:11 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "../iterators/pair.hpp"
 # define BLACK 0
 # define RED 1
-
 
 namespace ft {
 	template<class T>
@@ -107,7 +106,7 @@ namespace ft {
 					_compare = rhs._compare;
 					_node_allocate = rhs._node_allocate;
 					root = copy(rhs.root, rhs.tnil, rhs.before_the_begin, rhs.past_the_end);
-					setExtremes2();
+					set_end();
 				}
 				return (*this);
 			}
@@ -126,7 +125,6 @@ namespace ft {
 					newnode->right->parent = newnode;
 				return (newnode);
 			}
-
 			void	clear() {
 				if (root == tnil)
 					return ;
@@ -134,15 +132,13 @@ namespace ft {
 				root = tnil;
 				_size = 0;
 			}
-
 			nodePtr	getroot() const {
 				return (root);
 			}
 			nodePtr	gettnil() const {
 				return (tnil);
 			}
-
-			void setExtremes1() {
+			void set_begin() {
 				nodePtr _min = min(root);
 				nodePtr _max = max(root);
 
@@ -155,20 +151,17 @@ namespace ft {
 				if (_max)
 					_max->right = tnil;
 			}
-
-			void setExtremes2() {
+			void set_end() {
 				nodePtr _min = min(root);
 				nodePtr _max = max(root);
 
 				if (_min)
 					_min->left = before_the_begin;
 				before_the_begin->parent = _min;
-
 				if (_max)
 					_max->right = past_the_end;
 				past_the_end->parent = _max;
 			}
-
 			nodePtr	find (const value_type& k) const {
 				nodePtr	current = root;
 				nodePtr	node;
@@ -224,7 +217,6 @@ namespace ft {
 				tmp->left = node;
 				node->parent = tmp;
 			}
-
 			void	rightrotate(nodePtr node)
 			{
 				nodePtr	tmp;
@@ -295,9 +287,8 @@ namespace ft {
 				}
 				root->color = BLACK;
 			}
-
 			void	insert(const value_type & value) {
-				setExtremes1();
+				set_begin();
 				nodePtr new_node = _node_allocate.allocate(1);
 				_node_allocate.construct(new_node, node_type(value));
 				new_node->left = tnil;
@@ -330,7 +321,7 @@ namespace ft {
 				// if (new_node->parent->parent == nullptr)
 				// 	return ;
 				recolor(new_node);
-				setExtremes2();
+				set_end();
 			}
 
 			void	freeNode(nodePtr node) {
@@ -346,7 +337,6 @@ namespace ft {
 				ft_free(node->right);
 				freeNode(node);
 			}
-
 			static nodePtr	min(nodePtr node) {
 				if (!node || !node->left)
 					return (nullptr);
@@ -354,7 +344,6 @@ namespace ft {
 					node = node->left;
 				return (node);
 			}
-
 			static nodePtr	max(nodePtr node) {
 				if (!node || !node->right)
 					return (nullptr);
@@ -362,7 +351,6 @@ namespace ft {
 					node = node->right;
 				return (node);
 			}
-
 			static nodePtr	successor(nodePtr node) {
 				if (node->right && node->right->parent)
 					return (min(node->right));
@@ -373,7 +361,6 @@ namespace ft {
 				}
 				return (current);
 			}
-
 			static nodePtr	predecessor(nodePtr node) {
 				if (node->left && node->left->parent)
 					return (max(node->left));
@@ -384,7 +371,6 @@ namespace ft {
 				}
 				return (current);
 			}
-
 			void	rbTransplant(nodePtr first, nodePtr second) {
 				if (first->parent == nullptr)
 					root = second;
@@ -394,7 +380,6 @@ namespace ft {
 					first->parent->right = second;
 				second->parent = first->parent;
 			}
-
 			void	fixdelete(nodePtr node) {
 				nodePtr	tmp;
 
@@ -454,52 +439,8 @@ namespace ft {
 				}
 				node->color = BLACK;
 			}
-
-			// void deleteNode(const value_type &key)
-            // {
-			// 	setExtremes1();
-            //     nodePtr node = find(key);
-            //     nodePtr tmp1, tmp2;
-
-            //     if (!node || node == tnil)
-            //         return ;
-            //     tmp2 = node;
-            //     bool isBlack = node->color;
-
-            //     if (node->left == tnil) {
-            //         tmp1 = node->right;
-            //         rbTransplant(node, node->right);
-            //     } else if (node->right == tnil) {
-            //         tmp1 = node->left;
-            //         rbTransplant(node, node->left);
-            //     } else {
-            //         tmp2 = min(node->right);
-            //         isBlack = tmp2->color;
-            //         tmp1 = tmp2->right;
-            //         if (tmp2->parent == node)
-            //             tmp1->parent = tmp2;
-            //         else
-            //         {
-            //             rbTransplant(tmp2, tmp2->right);
-            //             tmp2->right = node->right;
-            //                 tmp2->right->parent = tmp2;
-            //         }
-            //         rbTransplant(node, tmp2);
-            //         tmp2->left = node->left;
-            //             tmp2->left->parent = tmp2;
-            //         tmp2->color = node->color;
-            //     }
-            //     freeNode(node);
-            //     if (isBlack)
-            //         fixdelete(tmp1);
-            //     // ? check if tree is balanced blacks(_root);
-            //     tnil->parent = nullptr;
-            //     _size--;
-			// 	setExtremes2();
-            // }
-
 			void	deleteNode(const value_type &value) {
-				setExtremes1();
+				set_begin();
 				nodePtr	current;
 				nodePtr	tmp1;
 				nodePtr	tmp2;
@@ -538,9 +479,8 @@ namespace ft {
 					fixdelete(tmp1);
 				tnil->parent = nullptr;
 				_size--;
-				setExtremes2();
+				set_end();
 			}
-
 			void printer(nodePtr root, std::string indent, bool last) {
 				if (root != tnil) {
 					std::cout << indent;
@@ -558,13 +498,11 @@ namespace ft {
 					printer(root->right, indent, true);
 				}
 			}
-
 			void	printTree() {
 				if (root)
 					printer(this->root, "", true);
 				std::cout << "|---------------------------------|\n";
 			}
-
 			size_type	size() const {
 				return (_size);
 			}

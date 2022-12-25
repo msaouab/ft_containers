@@ -1,4 +1,4 @@
-#include "RB_TREE/Redblack_tree.hpp"
+#include "../RB_TREE/Redblack_tree.hpp"
 
 #include <iostream>
 using namespace std;
@@ -52,7 +52,6 @@ int main() {
 	// tree.deleteNode(76);
 	// tree.deleteNode(49);
 
-	std::cout << "pair called the Default iterator 1" << std::endl;
 	std::cout << tree.find(49) << std::endl;
 
 	tree.printTree();

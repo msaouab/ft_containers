@@ -1,7 +1,7 @@
 #include <iostream>
 #include <set>
 #include <iterator>
-#include "./set/set.hpp"
+#include "../set/set.hpp"
 
 
 int main() {

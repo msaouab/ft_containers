@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <iterator>
-#include "./map/map.hpp"
+#include "../map/map.hpp"
 
 
 int main() {
