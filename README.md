@@ -12,12 +12,13 @@
 
 # Testing
 - in Folder `Testers/` we have a files `.cpp` to test all containers and compared with original containers.
-	- if you need to test vector use `c++ Testers/vectortest.cpp`
-	- if you need to test map use `c++ Testers/mapTester.cpp`
-	- if you need to test set use `c++ Testers/setTester.cpp`
-	- if you need to test stack use `c++ Testers/stacktest.cpp`
-	- if you need to test red-black tree use `c++ Testers/testrbt.cpp`
-	- if you need to test for xtra containers use `c++ Testers/xtraTest.cpp`
+	- if you need to test vector use `make vector && ./my_vector`
+	- if you need to test map use `make map && ./my_map`
+	- if you need to test set use `make set && ./my_set`
+	- if you need to test stack use `make stack && ./my_stack`
+	- if you need to test red-black tree use `make rb_tree && ./my_rb_tree`
+	- if you need to test for iterators containers use `make it && ./my_it`
+	- if you need to test timing of the containers use `make && ./my_containers 1`
 
 # Resources
 

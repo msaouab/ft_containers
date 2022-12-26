@@ -29,14 +29,14 @@ int main() {
 	tree.insert(49);
 
 	tree.printTree();
-	std::cout << tree.size() << '\n';
+	// std::cout << tree.size() << '\n';
 
-	tree.deleteNode(4);
-	tree.deleteNode(69);
-	tree.deleteNode(70);
-	tree.deleteNode(15);
-	tree.deleteNode(8);
-	tree.deleteNode(73);
+	// tree.deleteNode(4);
+	// tree.deleteNode(69);
+	// tree.deleteNode(70);
+	// tree.deleteNode(15);
+	// tree.deleteNode(8);
+	// tree.deleteNode(73);
 	// tree.deleteNode(97);
 	// tree.deleteNode(51);
 	// tree.deleteNode(78);
@@ -52,8 +52,8 @@ int main() {
 	// tree.deleteNode(76);
 	// tree.deleteNode(49);
 
-	std::cout << tree.find(49) << std::endl;
+	// std::cout << tree.find(49) << std::endl;
 
-	tree.printTree();
-	std::cout << tree.size() << '\n';
+	// tree.printTree();
+	// std::cout << tree.size() << '\n';
 }

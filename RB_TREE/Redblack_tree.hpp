@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/25 13:34:11 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/26 13:09:36 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -481,21 +481,21 @@ namespace ft {
 				_size--;
 				set_end();
 			}
-			void printer(nodePtr root, std::string indent, bool last) {
+			void printer(nodePtr root, std::string str, bool last) {				
 				if (root != tnil) {
-					std::cout << indent;
+					std::cout << str;
 					if (last) {
 						std::cout << "R----";
-						indent += "     ";
+						str += "\t";
 					}
 					else {
 						std::cout << "L----";
-						indent += "|\t";
+						str += "|\t";
 					}
-					std::string scolor = root->color ? "Red" : "Black";
-					std::cout << root->data << "(" << scolor << ")" << std::endl;
-					printer(root->left, indent, false);
-					printer(root->right, indent, true);
+					std::string sh = root->color ? "R" : "B";
+					std::cout << root->data << "(" << sh << ")" << std::endl;
+					printer(root->left, str, false);
+					printer(root->right, str, true);
 				}
 			}
 			void	printTree() {
