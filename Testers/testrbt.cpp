@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     ft::RedBlackTree<int> tree;
 
-	std::cout << tree.size() << '\n';
+	// std::cout << tree.size() << '\n';
 	tree.insert(4);
 	tree.insert(69);
 	tree.insert(70);

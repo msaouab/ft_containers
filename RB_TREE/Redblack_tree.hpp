@@ -6,7 +6,7 @@
 /*   By: msaouab <msaouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:26:21 by msaouab           #+#    #+#             */
-/*   Updated: 2022/12/26 13:09:36 by msaouab          ###   ########.fr       */
+/*   Updated: 2022/12/26 13:59:11 by msaouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "../iterators/pair.hpp"
 # define BLACK 0
 # define RED 1
+# define R \033[1;31m
+# define ED \033[0m
 
 namespace ft {
 	template<class T>
@@ -481,26 +483,44 @@ namespace ft {
 				_size--;
 				set_end();
 			}
-			void printer(nodePtr root, std::string str, bool last) {				
-				if (root != tnil) {
-					std::cout << str;
-					if (last) {
-						std::cout << "R----";
-						str += "\t";
-					}
-					else {
-						std::cout << "L----";
-						str += "|\t";
-					}
-					std::string sh = root->color ? "R" : "B";
-					std::cout << root->data << "(" << sh << ")" << std::endl;
-					printer(root->left, str, false);
-					printer(root->right, str, true);
-				}
-			}
+			// void printer(nodePtr root, std::string str, bool last) {				
+			// 	if (root != tnil) {
+			// 		std::cout << str;
+			// 		if (last) {
+			// 			std::cout << "R----";
+			// 			str += "\t";
+			// 		}
+			// 		else {
+			// 			std::cout << "L----";
+			// 			str += "|\t";
+			// 		}
+			// 		std::string sh = root->color ? "R" : "B";
+			// 		std::cout << root->data << "(" << sh << ")" << std::endl;
+			// 		printer(root->left, str, false);
+			// 		printer(root->right, str, true);
+			// 	}
+			// }
+			void printTreeHelper(nodePtr node, int space)
+    		{
+    		    int i;
+    		    if(node != tnil)
+    		    {
+    		        space += 10;
+    		        printTreeHelper(node->right, space); 
+    		        std::cout << "\n"; 
+    		        for ( i = 10; i < space; i++) 
+    		            std::cout << "-";
+    		        if (node->color == RED)
+						std::cout << "\033[1;31m|" << node->data << "|\033[0m" << std::endl;
+					else 
+						std::cout << '|' << node->data << '|' << std::endl;
+    		        // std::cout << "\n";
+    		        printTreeHelper(node->left, space); 
+    		    }
+    		}
 			void	printTree() {
 				if (root)
-					printer(this->root, "", true);
+					printTreeHelper(this->root, 0);
 				std::cout << "|---------------------------------|\n";
 			}
 			size_type	size() const {
